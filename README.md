@@ -2,6 +2,8 @@
 test of a mutli repo Cmake based template
 
 cd build/
+
 cmake ../src/
+
 make
 

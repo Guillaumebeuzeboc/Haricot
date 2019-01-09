@@ -13,3 +13,4 @@ target_include_directories(z_lib PUBLIC
     PRIVATE src)
 # Depend on a library that we defined in the top-level file
 target_link_libraries(z_lib ${Boost_LIBRARIES})
+BUILDDEB()

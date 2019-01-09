@@ -13,3 +13,4 @@ target_include_directories(a_lib PUBLIC
 # Depend on a library that we defined in the top-level file
 target_link_libraries(a_lib ${Boost_LIBRARIES})
 #export(TARGETS a_lib FILE ALibConfig.cmake)
+BUILDDEB()

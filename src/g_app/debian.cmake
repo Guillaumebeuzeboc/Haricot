@@ -1,0 +1,7 @@
+set(MAJOR_VERSION "1")
+set(MINOR_VERSION "0")
+set(PATCH_VERSION "1")
+set(DESCRIPTION "g_app")
+set(SUMMARY "g_app deb pkg")
+set(VENDOR "beuzeboc")
+set(MAINTAINER "guillaume.beuzeboc@gmail.com")

@@ -13,3 +13,13 @@ target_include_directories(z_lib PUBLIC
     PRIVATE src)
 # Depend on a library that we defined in the top-level file
 target_link_libraries(z_lib ${Boost_LIBRARIES})
+
+install (TARGETS z_lib
+         EXPORT z_lib
+         ARCHIVE DESTINATION lib/${PROJECT_NAME}
+         LIBRARY DESTINATION lib/${PROJECT_NAME}
+         RUNTIME DESTINATION bin/${PROJECT_NAME})
+
+SETUP_PKG(z_lib z_lib)
+
+BUILDDEB()

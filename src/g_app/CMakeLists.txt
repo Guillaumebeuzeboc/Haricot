@@ -1,7 +1,6 @@
 project(g_app)
-if (NOT TARGET a_lib)
-    find_package(a_lib)
-endif()
+FIND_PKG(a_lib)
+FIND_PKG(z_lib)
 add_executable(g_app
     src/app.cpp)
 

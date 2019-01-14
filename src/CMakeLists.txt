@@ -68,6 +68,12 @@ macro(SETUP_PKG PKG_NAME)
 
 endmacro()
 
+macro(FIND_PKG pkg)
+    if (NOT TARGET ${pkg})
+        find_package(${pkg} REQUIRED)
+    endif()
+endmacro()
+
 set(ROOT_DIR "${CMAKE_SOURCE_DIR}/..")
 set(CMAKE_INSTALL_PREFIX "${ROOT_DIR}/install")
 file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX})

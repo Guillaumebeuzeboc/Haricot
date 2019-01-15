@@ -1,4 +1,6 @@
 # My customs Macro for workspace building/installing/packaging
+
+# list directory in the curdir
 macro(SUBDIRLIST result curdir)
       file(GLOB children RELATIVE ${curdir} ${curdir}/*)
       set(dirlist "")
@@ -10,6 +12,8 @@ macro(SUBDIRLIST result curdir)
       set(${result} ${dirlist})
 endmacro()
 
+# build a debian package out of the cmake config with cpack
+# a debian.cmake is necessary in your package
 macro(BUILDDEB)
     if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     include(InstallRequiredSystemLibraries)
@@ -37,6 +41,7 @@ macro(BUILDDEB)
     ENDIF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 endmacro()
 
+# transform ARGN to a string of all the args separated by a space
 macro(ARGN_TO_STRING)
     set (LIST_ARGN ${ARGN})
     list(GET LIST_ARGN 0 LIST_STRING)
@@ -46,6 +51,8 @@ macro(ARGN_TO_STRING)
     endforeach()
 endmacro()
 
+# export all the necessary files in order to use this package from another workspace
+# ie: find_package
 macro(SETUP_PKG PKG_NAME)
     message("PKG_NAME ${PKG_NAME}")
     message("MODULES ${ARGN}")
@@ -80,12 +87,15 @@ macro(SETUP_PKG PKG_NAME)
 
 endmacro()
 
+# Custom find_package to avoid to try to reimport a target already present
+# (This Macro is just a workaround, need to find a better solution)
 macro(FIND_PKG pkg)
     if (NOT TARGET ${pkg})
         find_package(${pkg} REQUIRED)
     endif()
 endmacro()
 
+# Macro to install targets
 macro(INSTALL_BIN_LIB PKG_NAME)
     ARGN_TO_STRING(${ARGN})
     install (TARGETS ${LIST_STRING}
@@ -95,6 +105,7 @@ macro(INSTALL_BIN_LIB PKG_NAME)
          RUNTIME DESTINATION bin/${PROJECT_NAME})
 endmacro()
 
+# Macro to install headers
 macro(INSTALL_ALL_HEADERS)
     install(DIRECTORY include/ DESTINATION include)
 endmacro()

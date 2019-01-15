@@ -7,3 +7,7 @@ cmake ../src/
 
 make
 
+make install
+
+
+cd build/a_lib/; cpack

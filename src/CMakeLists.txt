@@ -42,6 +42,15 @@ macro(BUILDDEB)
     ENDIF(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 endmacro()
 
+macro(ARGN_TO_STRING)
+    set (LIST_ARGN ${ARGN})
+    list(GET LIST_ARGN 0 LIST_STRING)
+    list(REMOVE_AT LIST_ARGN 0)
+    foreach(ELEMENT ${LIST_ARGN})
+        set(LIST_STRING "${ELEMENT} ${LIST_STRING}")
+    endforeach()
+endmacro()
+
 macro(SETUP_PKG PKG_NAME)
     message("PKG_NAME ${PKG_NAME}")
     message("MODULES ${ARGN}")
@@ -72,6 +81,15 @@ macro(FIND_PKG pkg)
     if (NOT TARGET ${pkg})
         find_package(${pkg} REQUIRED)
     endif()
+endmacro()
+
+macro(INSTALL_BIN_LIB PKG_NAME)
+    ARGN_TO_STRING(${ARGN})
+    install (TARGETS ${LIST_STRING}
+         EXPORT ${PKG_NAME}
+         ARCHIVE DESTINATION lib/${PROJECT_NAME}
+         LIBRARY DESTINATION lib/${PROJECT_NAME}
+         RUNTIME DESTINATION bin/${PROJECT_NAME})
 endmacro()
 
 macro(INSTALL_ALL_HEADERS)

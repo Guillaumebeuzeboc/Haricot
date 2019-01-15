@@ -74,6 +74,10 @@ macro(FIND_PKG pkg)
     endif()
 endmacro()
 
+macro(INSTALL_ALL_HEADERS)
+    install(DIRECTORY include/ DESTINATION include)
+endmacro()
+
 set(ROOT_DIR "${CMAKE_SOURCE_DIR}/..")
 set(CMAKE_INSTALL_PREFIX "${ROOT_DIR}/install")
 file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX})

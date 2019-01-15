@@ -12,13 +12,14 @@ target_include_directories(a_lib PUBLIC
 
 # Depend on a library that we defined in the top-level file
 target_link_libraries(a_lib ${Boost_LIBRARIES})
-#export(TARGETS a_lib FILE ALibConfig.cmake)
 
 install (TARGETS a_lib
          EXPORT a_lib
          ARCHIVE DESTINATION lib/${PROJECT_NAME}
          LIBRARY DESTINATION lib/${PROJECT_NAME}
          RUNTIME DESTINATION bin/${PROJECT_NAME})
+
+INSTALL_ALL_HEADERS()
 
 SETUP_PKG(a_lib a_lib) # First arg is pkg name and after they are the targets names
 

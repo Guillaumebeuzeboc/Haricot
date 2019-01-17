@@ -1,6 +1,8 @@
 # Cmake_multi_repo_template
 Test of a mutli repo Cmake based template
 
+Tested only on Linux with cmake 3.13.2 and 3.5.1
+
 ## Usage
 
 - `cd build/`

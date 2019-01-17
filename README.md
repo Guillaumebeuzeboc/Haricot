@@ -1,17 +1,17 @@
-# cmake_multi_repo_template
+# Cmake_multi_repo_template
 Test of a mutli repo Cmake based template
 
 ## Usage
 
-cd build/
+- `cd build/`
 
-cmake ../src/
+- `cmake ../src/`
 
-make
+- `make`
 
-make install
+- `make install`
 
-cd build/a_lib/; cpack
+- `cd build/a_lib/; cpack`
 
 ## Features
 
@@ -25,7 +25,7 @@ The CmakeLists.txt in packages (Subdirectories) are standards (except that they 
 - Generate .deb for each packages
 
 
-## add a package (subdirectory)
+## Add a package (subdirectory)
 
 Packages can come from different git repo or sub-modules
 

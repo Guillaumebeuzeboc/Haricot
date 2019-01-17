@@ -1,5 +1,5 @@
 # cmake_multi_repo_template
-test of a mutli repo Cmake based template
+Test of a mutli repo Cmake based template
 
 ## Usage
 

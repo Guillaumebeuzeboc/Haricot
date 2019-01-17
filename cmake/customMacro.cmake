@@ -1,5 +1,32 @@
 # My customs Macro for workspace building/installing/packaging
 
+# Sort subdirectories to compile dependencies first
+macro(SORT_SUBDIRS)
+    message("== Before sorting dependencies subdirs: ${SUBDIRS}")
+    foreach(dir ${SUBDIRS})
+        set(cmd "grep -r \"FIND_PKG(${dir})\" | awk -F \"/\" '{print $1}'")
+        execute_process(COMMAND bash -c ${cmd}
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+            RESULT_VARIABLE result
+            OUTPUT_VARIABLE output)
+        if(output)
+            string(REGEX MATCHALL "[^\n]+" output_list ${output})
+            #message("for pkg: ${dir} list: ${output_list}")
+            list(FIND SUBDIRS ${dir} index_dir)
+            foreach(usedby ${output_list})
+                list(FIND SUBDIRS ${usedby} index_dep)
+                if(${index_dep} LESS ${index_dir})
+                    message("The using pkg: ${usedby} is located index: ${index_dep} and will be moved ${index_dir}")
+                    list(REMOVE_AT SUBDIRS ${index_dep})
+                    list(INSERT SUBDIRS ${index_dir} ${usedby})
+                endif()
+            endforeach()
+            unset(output_list)
+        endif()
+    endforeach()
+    message("== After sorting dependencies subdirs: ${SUBDIRS}")
+endmacro()
+
 # list directory in the curdir
 macro(SUBDIRLIST result curdir)
       file(GLOB children RELATIVE ${curdir} ${curdir}/*)
@@ -54,8 +81,6 @@ endmacro()
 # export all the necessary files in order to use this package from another workspace
 # ie: find_package
 macro(SETUP_PKG PKG_NAME)
-    message("PKG_NAME ${PKG_NAME}")
-    message("MODULES ${ARGN}")
     set (TARGETS ${ARGN})
     list(GET TARGETS 0 TARGETS_LIST)
     list(REMOVE_AT TARGETS 0)

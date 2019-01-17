@@ -57,8 +57,9 @@ macro(BUILDDEB)
     set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}_${PKG_VERSION}")
     set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PROJECT_NAME}_${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}")
 
-    set (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON) # auto detect dependencies
-    set( CPACK_OUTPUT_CONFIG_FILE "${PROJECT_BINARY_DIR}/CPackConfig.cmake" )
+    set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON) # auto detect dependencies
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "${${PROJECT_NAME}_intenal_depends}")
+    set(CPACK_OUTPUT_CONFIG_FILE "${PROJECT_BINARY_DIR}/CPackConfig.cmake" )
 
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
     set(CPACK_DEBIAN_PACKAGE_SECTION "beuz")
@@ -113,10 +114,16 @@ macro(SETUP_PKG PKG_NAME)
 endmacro()
 
 # Custom find_package to avoid to try to reimport a target already present
-# (This Macro is just a workaround, need to find a better solution)
-macro(FIND_PKG pkg)
-    if (NOT TARGET ${pkg})
-        find_package(${pkg} REQUIRED)
+macro(find_package)
+    if(NOT "${ARGV0}" IN_LIST SUBDIRS)
+        message("${ARGV0} not in the subdirs so we include it")
+        _find_package(${ARGV})
+    else()
+        if(NOT DEFINED ${PROJECT_NAME}_internal_depends)
+            set(${PROJECT_NAME}_internal_depends "${ARGV0}")
+        else()
+            set(${PROJECT_NAME}_intenal_depends "${${PROJECT_NAME}_internal_depends}, ${ARGV0}")
+        endif()
     endif()
 endmacro()
 

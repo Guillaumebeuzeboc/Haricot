@@ -4,7 +4,7 @@
 macro(SORT_SUBDIRS)
     message("== Before sorting dependencies subdirs: ${SUBDIRS}")
     foreach(dir ${SUBDIRS})
-        set(cmd "grep -r \"find_package(${dir})\" | awk -F \"/\" '{print $1}'")
+        set(cmd "grep -r \"find_package(${dir})\" | awk -F \"/\" '{print $1}'") #"
         execute_process(COMMAND bash -c ${cmd}
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
             RESULT_VARIABLE result

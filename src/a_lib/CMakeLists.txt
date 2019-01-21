@@ -1,6 +1,9 @@
 project(a_lib VERSION 0.1 LANGUAGES CXX)
 
 find_package( Boost COMPONENTS date_time REQUIRED )
+
+SETUP_PYTHON_PKG()
+
 include_directories(include ${Boost_INCLUDE_DIR} )
 add_library(a_lib
     src/lib.cpp)

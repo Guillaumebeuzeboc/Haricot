@@ -15,7 +15,7 @@ macro(SETUP_PYTHON_PKG)
      configure_file(${ROOT_DIR}/cmake/__init__.py.in ${INIT_PKG_BUILD})
 
      set(PATH_TO_${PROJECT_NAME}_PY_FILES "${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}")
-     install(DIRECTORY ${PATH_TO_${PROJECT_NAME}_PY_FILES} DESTINATION lib/python3/dist-packages)
+     install(DIRECTORY ${PATH_TO_${PROJECT_NAME}_PY_FILES} DESTINATION lib/python3/dist-packages COMPONENT ${${PROJECT_NAME}_UPPER})
 
 endmacro()
 
@@ -24,7 +24,7 @@ macro(INSTALL_PYTHON_FILES)
     #PROGRAMS
     # scripts/my_scrip.py
     #DESTINATION
-    #${CAMKE_PYTHON_INSTALL}/${PROJECT_NAME}
+    #${CAMKE_PYTHON_INSTALL}/${PROJECT_NAME} COMPONENT ${${PROJECT_NAME}_UPPER}
     #)
 endmacro()
 

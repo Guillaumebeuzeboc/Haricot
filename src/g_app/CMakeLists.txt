@@ -1,6 +1,9 @@
 project(g_app)
 find_package(a_lib)
 find_package(z_lib)
+
+INIT_PKG()
+
 add_executable(g_app
     src/app.cpp)
 

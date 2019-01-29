@@ -2,6 +2,9 @@ project(z_lib)
 
 find_package( Boost COMPONENTS date_time REQUIRED )
 find_package(Eigen3 REQUIRED)
+
+INIT_PKG()
+
 include_directories(include ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIR})
 add_library(z_lib
     src/lib.cpp)

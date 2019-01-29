@@ -2,6 +2,8 @@ project(a_lib VERSION 0.1 LANGUAGES CXX)
 
 find_package( Boost COMPONENTS date_time REQUIRED )
 
+INIT_PKG()
+
 SETUP_PYTHON_PKG()
 
 include_directories(include ${Boost_INCLUDE_DIR} )

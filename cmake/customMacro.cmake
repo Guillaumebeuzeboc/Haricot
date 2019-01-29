@@ -4,7 +4,7 @@
 macro(SORT_SUBDIRS)
     message("== Before sorting dependencies subdirs: ${SUBDIRS}")
     foreach(dir ${SUBDIRS})
-        set(cmd "grep -r \"find_package(${dir})\" | awk -F \"/\" '{print $1}'")
+        set(cmd "grep -r \"find_package(${dir})\" | awk -F \"/\" '{print $1}'") #"
         execute_process(COMMAND bash -c ${cmd}
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
             RESULT_VARIABLE result
@@ -39,13 +39,16 @@ macro(SUBDIRLIST result curdir)
       set(${result} ${dirlist})
 endmacro()
 
+macro(INIT_PKG)
+    string(TOUPPER ${PROJECT_NAME} ${PROJECT_NAME}_UPPER)
+endmacro()
 # build a debian package out of the cmake config with cpack
 # a debian.cmake is necessary in your package
 macro(BUILDDEB)
     if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     include(InstallRequiredSystemLibraries)
-    set(CPACK_SET_DESTDIR "on")
-    set(CPACK_PACKAGING_INSTALL_PREFIX "/tmp")
+    set(CPACK_SET_DESTDIR true)
+    set(CPACK_INSTALL_PREFIX "/opt/guillaume")
     set(CPACK_GENERATOR "DEB")
     set(CPACK_PACKAGE_DESCRIPTION "${DESCRIPTION}")
     set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${SUMMARY}")
@@ -54,6 +57,7 @@ macro(BUILDDEB)
     set(CPACK_PACKAGE_VERSION_MAJOR "${MAJOR_VERSION}")
     set(CPACK_PACKAGE_VERSION_MINOR "${MINOR_VERSION}")
     set(CPACK_PACKAGE_VERSION_PATCH "${PATCH_VERSION}")
+    set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_CURRENT_BINARY_DIR};${PROJECT_NAME};${${PROJECT_NAME}_UPPER};/") # remove this line if you don't want to use the components packaging
     set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}_${PKG_VERSION}")
     set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PROJECT_NAME}_${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}")
 
@@ -91,6 +95,7 @@ macro(SETUP_PKG PKG_NAME)
     export(TARGETS ${TARGETS_LIST} FILE "${PROJECT_BINARY_DIR}/${PKG_NAME}.cmake")
     export(PACKAGE ${PKG_NAME})
 
+
     include(${CMAKE_CURRENT_SOURCE_DIR}/debian.cmake)
     set(PKG_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
     set(${PKG_NAME}_VERSION "${PKG_VERSION}" PARENT_SCOPE)
@@ -109,8 +114,8 @@ macro(SETUP_PKG PKG_NAME)
     install(FILES
         ${PROJECT_BINARY_DIR}/${PKG_NAME}Config.cmake
         ${PROJECT_BINARY_DIR}/${PKG_NAME}ConfigVersion.cmake
-        DESTINATION lib/${PROJECT_NAME})
-    install(EXPORT ${PKG_NAME} DESTINATION lib/${PROJECT_NAME})
+        DESTINATION lib/${PROJECT_NAME} COMPONENT ${${PROJECT_NAME}_UPPER})
+    install(EXPORT ${PKG_NAME} DESTINATION lib/${PROJECT_NAME} COMPONENT ${${PROJECT_NAME}_UPPER})
 
 endmacro()
 
@@ -134,15 +139,16 @@ endmacro()
 # Macro to install targets
 macro(INSTALL_BIN_LIB PKG_NAME)
     ARGN_TO_STRING(${ARGN})
+    string(TOUPPER ${PROJECT_NAME} ${PROJECT_NAME}_UPPER)
     install (TARGETS ${LIST_STRING}
          EXPORT ${PKG_NAME}
-         ARCHIVE DESTINATION lib/${PROJECT_NAME}
-         LIBRARY DESTINATION lib/${PROJECT_NAME}
-         RUNTIME DESTINATION bin/${PROJECT_NAME})
+         ARCHIVE DESTINATION lib/${PROJECT_NAME} COMPONENT ${${PROJECT_NAME}_UPPER}
+         LIBRARY DESTINATION lib/${PROJECT_NAME} COMPONENT ${${PROJECT_NAME}_UPPER}
+         RUNTIME DESTINATION bin/${PROJECT_NAME} COMPONENT ${${PROJECT_NAME}_UPPER})
 endmacro()
 
 # Macro to install headers
 macro(INSTALL_ALL_HEADERS)
-    install(DIRECTORY include/ DESTINATION include)
+    install(DIRECTORY include/ DESTINATION include COMPONENT ${${PROJECT_NAME}_UPPER})
 endmacro()
 

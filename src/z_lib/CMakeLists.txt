@@ -5,6 +5,8 @@ find_package(Eigen3 REQUIRED)
 
 INIT_PKG()
 
+SETUP_PYTHON_PKG()
+
 include_directories(include ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIR})
 add_library(z_lib
     src/lib.cpp)

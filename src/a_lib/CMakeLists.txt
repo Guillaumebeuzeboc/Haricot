@@ -22,6 +22,8 @@ INSTALL_BIN_LIB(a_lib a_lib)
 
 INSTALL_ALL_HEADERS()
 
+INSTALL_PYTHON_SCRIPTS(scripts/a_test.py)
+
 SETUP_PKG(a_lib a_lib) # First arg is pkg name and after they are the targets names
 
 BUILDDEB()

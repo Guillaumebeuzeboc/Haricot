@@ -19,12 +19,9 @@ macro(SETUP_PYTHON_PKG)
 
 endmacro()
 
-macro(INSTALL_PYTHON_FILES)
-    #install(
-    #PROGRAMS
-    # scripts/my_scrip.py
-    #DESTINATION
-    #${CAMKE_PYTHON_INSTALL}/${PROJECT_NAME} COMPONENT ${${PROJECT_NAME}_UPPER}
-    #)
+macro(INSTALL_PYTHON_SCRIPTS)
+    set (SCRIPTS ${ARGN})
+    install(PROGRAMS ${SCRIPTS} DESTINATION lib/${PROJECT_NAME} COMPONENT ${${PROJECT_NAME}_UPPER}
+    )
 endmacro()
 

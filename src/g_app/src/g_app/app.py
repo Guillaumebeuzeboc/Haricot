@@ -8,5 +8,3 @@ def main():
     z_lib.z_lib_function()
     print("HelloWorld")
 
-if __name__ == "__main__":
-    main()

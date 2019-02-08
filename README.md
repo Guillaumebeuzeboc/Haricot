@@ -5,16 +5,9 @@ Tested only on Linux with cmake 3.13.2 and 3.5.1
 
 ## Usage
 
-- `cd build/`
-
-- `cmake ../src/`
-
-- `make`
-
-- `make install`
-
-- `cd build/a_lib/; cpack`
-
+- `./configure`
+- `cd build/mypkg; cpack`
+- `cd build; ninja install`
 ## Features
 
 Top level CMakeLists.txt architecture

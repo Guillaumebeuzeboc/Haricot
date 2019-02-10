@@ -6,7 +6,7 @@ Tested only on Linux with cmake 3.13.2 and 3.5.1
 ## Usage
 
 - `./configure`
-- `cd build/mypkg; cpack`
+- `cd build/src/mypkg; cpack`
 - `cd build; ninja install`
 ## Features
 

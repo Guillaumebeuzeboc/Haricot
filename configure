@@ -1,6 +1,6 @@
 set -e
 DIR=$(dirname ${0})
 cd ${DIR}/build
-cmake -GNinja ../src
+cmake -GNinja ..
 ninja
 cd -

@@ -6,7 +6,7 @@ macro(SORT_SUBDIRS)
     foreach(dir ${SUBDIRS})
         set(cmd "grep -r \"find_package(${dir})\" | awk -F \"/\" '{print $1}'") #"
         execute_process(COMMAND bash -c ${cmd}
-            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src
             RESULT_VARIABLE result
             OUTPUT_VARIABLE output)
         if(output)

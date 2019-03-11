@@ -1,0 +1,7 @@
+set(MAJOR_VERSION "1")
+set(MINOR_VERSION "0")
+set(PATCH_VERSION "0")
+set(DESCRIPTION "cmake_multi_repo")
+set(SUMMARY "cmake_multi_repo deb pkg")
+set(VENDOR "beuzeboc")
+set(MAINTAINER "guillaume.beuzeboc@gmail.com")

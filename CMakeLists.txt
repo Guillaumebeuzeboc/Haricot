@@ -1,25 +1,10 @@
-cmake_minimum_required(VERSION 3.5)
-project(workspace)
+project(cmake_multi_repo)
 
-set(cmd "dirname -z $(realpath CMakeLists.txt)")
-execute_process(COMMAND bash -c ${cmd}
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    RESULT_VARIABLE result
-    OUTPUT_VARIABLE ORIGIN)
+INIT_PKG()
 
-include(${ORIGIN}/cmake/customMacro.cmake)
-include(${ORIGIN}/cmake/python.cmake)
-set(ROOT_DIR "${CMAKE_SOURCE_DIR}")
-set(CMAKE_INSTALL_PREFIX "${ROOT_DIR}/install")
-file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX})
+SETUP_PKG(cmake_multi_repo)
 
-PREPARE_PYTHON()
-
-SUBDIRLIST(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR}/src)
-SORT_SUBDIRS()
-FOREACH(subdir ${SUBDIRS})
-  message("== Configuration of ${subdir} started")
-  ADD_SUBDIRECTORY(src/${subdir})
-  message("== Configuration of ${subdir} finished!")
-ENDFOREACH()
-
+install(DIRECTORY cmake/ DESTINATION share/cmake_multi_repo/cmake COMPONENT CMAKE_MULTI_REPO)
+install(FILES configure setup_install.zsh setup_package.zsh DESTINATION share/cmake_multi_repo COMPONENT CMAKE_MULTI_REPO)
+install(FILES setup.zsh DESTINATION . COMPONENT CMAKE_MULTI_REPO)
+BUILDDEB()

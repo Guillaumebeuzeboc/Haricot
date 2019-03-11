@@ -101,14 +101,14 @@ macro(SETUP_PKG PKG_NAME)
     set(${PKG_NAME}_VERSION "${PKG_VERSION}" PARENT_SCOPE)
 
     set(CONF_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
-    configure_file(${ROOT_DIR}/cmake/pkg-config.cmake
+    configure_file(${ORIGIN}/cmake/pkg-config.cmake
         "${PROJECT_BINARY_DIR}/${PKG_NAME}Config.cmake" @ONLY)
 
     set(CONF_INCLUDE_DIRS "${MAKE_INSTALL_PREFIX}/${PROJECT_NAME}")
-    configure_file(${ROOT_DIR}/cmake/pkg-config.cmake
+    configure_file(${ORIGIN}/cmake/pkg-config.cmake
         "${PROJECT_BINARY_DIR}/${PKG_NAME}Config.cmake" @ONLY)
 
-    configure_file(${ROOT_DIR}/cmake/ConfigVersion.cmake
+    configure_file(${ORIGIN}/cmake/ConfigVersion.cmake
         "${PROJECT_BINARY_DIR}/${PKG_NAME}ConfigVersion.cmake" @ONLY)
 
     install(FILES

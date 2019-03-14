@@ -1,17 +1,17 @@
-# Cmake_multi_repo_template
+# Haricot
 Test of a mutli repo Cmake based template
 Packages can contains C++ and Python code
 Tested only on Linux with cmake 3.13.2 and 3.5.1
 
 ## Usage
 
-- `./configure`
+- `./haricot`
 - `cd build/src/mypkg; cpack`
 - `cd build; ninja install`
 ## Features
 
 Top level CMakeLists.txt architecture
-The CmakeLists.txt in packages (Subdirectories) are standards (except that they can use extra features)
+The CMakeLists.txt in packages (Subdirectories) are standards (except that they can use extra features)
 
 - Build all the packages (subdiretories)
 - Export pkg.cmake in order to includes them in another project/package
@@ -19,6 +19,10 @@ The CmakeLists.txt in packages (Subdirectories) are standards (except that they 
 - Install targets/headers in the install directory at the root of the project
 - Generate .deb for each packages
 
+## Create a new workspace
+
+You can create a ws that would use haricot. To do that you would just have to create a symbolic link to the TopLevelCMake.txt the setup_local.zsh and to the haricot cmd (use the repo as an example).
+You can even combien workspace.
 
 ## Add a package (subdirectory)
 

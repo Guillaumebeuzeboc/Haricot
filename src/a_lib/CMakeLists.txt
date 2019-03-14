@@ -7,7 +7,7 @@ INIT_PKG()
 SETUP_PYTHON_PKG()
 
 include_directories(include ${Boost_INCLUDE_DIR} )
-add_library(a_lib
+add_library(a_lib SHARED
     src/lib.cpp)
 
 target_include_directories(a_lib PUBLIC

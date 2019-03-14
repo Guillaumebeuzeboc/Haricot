@@ -10,6 +10,7 @@ void liba_function()
       std::string s("2001-10-9"); //2001-October-09
       date d(from_simple_string(s));
       std::cout << to_simple_string(d) << std::endl;
+      std::cout << "this is a_lib" << std::endl;
     }
     catch(std::exception& e) {
       std::cout << "  Exception: " <<  e.what() << std::endl;

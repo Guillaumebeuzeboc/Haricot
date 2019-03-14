@@ -53,7 +53,8 @@ macro(BUILDDEB)
     if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     include(InstallRequiredSystemLibraries)
     set(CPACK_SET_DESTDIR true)
-    set(CPACK_INSTALL_PREFIX "/opt/guillaume")
+    set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+    set(CPACK_INSTALL_PREFIX "/opt/haricot-pkgs")
     set(CPACK_GENERATOR "DEB")
     set(CPACK_PACKAGE_DESCRIPTION "${DESCRIPTION}")
     set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${SUMMARY}")
@@ -71,7 +72,7 @@ macro(BUILDDEB)
     set(CPACK_OUTPUT_CONFIG_FILE "${PROJECT_BINARY_DIR}/CPackConfig.cmake" )
 
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
-    set(CPACK_DEBIAN_PACKAGE_SECTION "beuz")
+    set(CPACK_DEBIAN_PACKAGE_SECTION "haricot-pkgs")
     set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
     set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
     include(CPack)
@@ -109,14 +110,14 @@ macro(SETUP_PKG PKG_NAME)
     set(${PKG_NAME}_VERSION "${PKG_VERSION}" PARENT_SCOPE)
 
     set(CONF_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
-    configure_file(${ORIGIN}/cmake/pkg-config.cmake
+    configure_file(${ORIGIN}/pkg-config.cmake
         "${PROJECT_BINARY_DIR}/${PKG_NAME}Config.cmake" @ONLY)
 
     set(CONF_INCLUDE_DIRS "${MAKE_INSTALL_PREFIX}/${PROJECT_NAME}")
-    configure_file(${ORIGIN}/cmake/pkg-config.cmake
+    configure_file(${ORIGIN}/pkg-config.cmake
         "${PROJECT_BINARY_DIR}/${PKG_NAME}Config.cmake" @ONLY)
 
-    configure_file(${ORIGIN}/cmake/ConfigVersion.cmake
+    configure_file(${ORIGIN}/ConfigVersion.cmake
         "${PROJECT_BINARY_DIR}/${PKG_NAME}ConfigVersion.cmake" @ONLY)
 
     install(FILES

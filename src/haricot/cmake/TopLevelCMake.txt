@@ -6,7 +6,10 @@ execute_process(COMMAND bash -c ${cmd}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     RESULT_VARIABLE result
     OUTPUT_VARIABLE ORIGIN)
-
+# By default build shared lib
+if(NOT DEFINED BUILD_SHARED_LIBS)
+	set(BUILD_SHARED_LIBS ON) # by default shared is on and will be set to OFF if we do arm stuff
+endif()
 include(${ORIGIN}/customMacro.cmake)
 include(${ORIGIN}/python.cmake)
 set(ROOT_DIR "${CMAKE_SOURCE_DIR}")

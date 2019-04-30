@@ -1,6 +1,58 @@
+#!/bin/bash
 set -e
 DIR=$(dirname ${0})
+SL_PATH=$( dirname $(realpath ${0}) )
+
+USAGE="$(basename "$0"): Haricot build system
+
+where:
+	clean                -- clean build & install directory
+	-s|--stm32 toolchain -- Cross-compile using the provided toolchain ex: stm32l4
+	-h|--help            -- print this"
+
+function clean_directories {
+	echo "Deleting install directory and build directory content"
+	rm -Rf ${DIR}/install
+	rm -Rf ${DIR}/build/*
+	echo "Cleaned"
+}
+
+function stm32_compiler {
+	CMAKE_COMPILER_ARGS="-DBUILD_SHARED_LIBS:BOOL=OFF -DCMAKE_CXX_COMPILER=arm-none-eabi-g++"	
+	CMAKE_COMPILER_ARGS="${CMAKE_COMPILER_ARGS} -DCMAKE_C_COMPILER=arm-none-eabi-gcc "	
+}
+
+function stm32_toolchain {
+	CMAKE_TOOLCHAIN_ARGS="-DCMAKE_TOOLCHAIN_FILE=${SL_PATH}/cmake/stm32/${STM32_TO_USE}.cmake"
+}
+
+USE_STM32=false
+CMAKE_COMPILER_ARGS=""
+CMAKE_TOOLCHAIN_ARGS=""
+STM32_TO_USE=""
+while [[ $# -gt 0 ]]
+do
+    case "$1" in
+        -s|--stm32)
+        USE_STM32=true
+	STM32_TO_USE=$2
+	stm32_compiler
+	stm32_toolchain
+        shift
+        shift
+        ;;
+        clean)
+	clean_directories	
+	exit 1
+        ;;
+        -h|--help)
+        echo "$USAGE"
+ 	exit 1	
+        ;;
+    esac
+done
+
 cd ${DIR}/build
-cmake -GNinja ..
+cmake ${CMAKE_COMPILER_ARGS} ${CMAKE_TOOLCHAIN_ARGS} -GNinja ..
 ninja
 cd -

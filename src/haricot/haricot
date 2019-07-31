@@ -14,6 +14,7 @@ function clean_directories {
 	echo "Deleting install directory and build directory content"
 	rm -Rf ${DIR}/install
 	rm -Rf ${DIR}/build/*
+	rm -Rf ${DIR}/build-stm32/*
 	echo "Cleaned"
 }
 
@@ -30,12 +31,14 @@ USE_STM32=false
 CMAKE_COMPILER_ARGS=""
 CMAKE_TOOLCHAIN_ARGS=""
 STM32_TO_USE=""
+BUILD_DIRECTORY="build"
 while [[ $# -gt 0 ]]
 do
     case "$1" in
         -s|--stm32)
         USE_STM32=true
 	STM32_TO_USE=$2
+	BUILD_DIRECTORY="build-stm32"
 	stm32_compiler
 	stm32_toolchain
         shift
@@ -52,7 +55,8 @@ do
     esac
 done
 
-cd ${DIR}/build
+mkdir -p ${DIR}/${BUILD_DIRECTORY}
+cd ${DIR}/${BUILD_DIRECTORY}
 cmake ${CMAKE_COMPILER_ARGS} ${CMAKE_TOOLCHAIN_ARGS} -GNinja ..
 ninja
 cd -

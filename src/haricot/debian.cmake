@@ -1,6 +1,6 @@
 set(MAJOR_VERSION "0")
 set(MINOR_VERSION "0")
-set(PATCH_VERSION "4")
+set(PATCH_VERSION "5")
 set(DESCRIPTION "haricot")
 set(SUMMARY "haricot deb pkg")
 set(VENDOR "beuzeboc")

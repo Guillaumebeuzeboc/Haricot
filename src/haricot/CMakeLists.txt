@@ -5,6 +5,7 @@ INIT_PKG()
 SETUP_PKG(haricot)
 
 install(DIRECTORY cmake/ DESTINATION share/haricot/cmake COMPONENT HARICOT)
-install(FILES haricot setup_install.zsh setup_local.zsh DESTINATION share/haricot COMPONENT HARICOT)
+install(FILES haricot DESTINATION share/haricot COMPONENT HARICOT PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+install(FILES setup_install.zsh setup_local.zsh DESTINATION share/haricot COMPONENT HARICOT)
 install(FILES setup.zsh DESTINATION . COMPONENT HARICOT)
 BUILDDEB()

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 project(workspace)
 
+enable_testing()
+
 set(cmd "dirname -z $(realpath CMakeLists.txt)")
 execute_process(COMMAND bash -c ${cmd}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}

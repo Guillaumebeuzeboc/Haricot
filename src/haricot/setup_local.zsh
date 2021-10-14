@@ -20,6 +20,6 @@ do
 done
 
 MY_SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-CMAKE_PREFIX_PATH=${MY_SCRIPTPATH}/${BUILD_DIRNAME}/src:${CMAKE_PREFIX_PATH}
-PYTHONPATH=${MY_SCRIPTPATH}/${BUILD_DIRNAME}/python/lib/python3.5/site-packages:${PYTHONPATH}
+export CMAKE_PREFIX_PATH=${MY_SCRIPTPATH}/${BUILD_DIRNAME}/src:${CMAKE_PREFIX_PATH}
+export PYTHONPATH=${MY_SCRIPTPATH}/${BUILD_DIRNAME}/python/lib/python3.5/site-packages:${PYTHONPATH}
 

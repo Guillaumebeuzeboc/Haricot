@@ -1,5 +1,5 @@
 # Haricot
-Test of a mutli repo Cmake based template
+Test of a mutli repo CMake based template
 Packages can contains C++ and Python code
 Tested only on Linux with cmake 3.13.2 and 3.5.1
 
